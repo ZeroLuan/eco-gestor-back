@@ -13,6 +13,7 @@ public class EnderecoMapper {
 
     public Endereco toEntity(EnderecoRequest request) {
         Endereco endereco = new Endereco();
+
         endereco.setBairro(request.getBairro());
         endereco.setCep(request.getCep());
         endereco.setCidade(request.getCidade());
@@ -20,7 +21,7 @@ public class EnderecoMapper {
         endereco.setEstado(EnumEstados.valueOf(request.getEstado())); // converte String → Enum
         endereco.setLogradouro(request.getLogradouro());
         endereco.setNumero(request.getNumero());
-        endereco.setDataInicio(LocalDateTime.now());
+
         return endereco;
     }
 
@@ -35,10 +36,19 @@ public class EnderecoMapper {
         response.setEstado(entity.getEstado().getValue());
         response.setLogradouro(entity.getLogradouro());
         response.setNumero(entity.getNumero());
-        response.setDataInicio(entity.getDataInicio());
-        response.setDataFim(entity.getDataFim());
 
         return response;
+    }
+
+    public void atualizar(Endereco endereco, EnderecoRequest request) {
+        endereco.setBairro(request.getBairro());
+        endereco.setCep(request.getCep());
+        endereco.setCidade(request.getCidade());
+        endereco.setComplemento(request.getComplemento());
+        endereco.setLogradouro(request.getLogradouro());
+        endereco.setNumero(request.getNumero());
+        endereco.setDataInicio(request.getDataInicio());
+        endereco.setEstado(EnumEstados.valueOf(request.getEstado())); // converte String → Enum
     }
 
 

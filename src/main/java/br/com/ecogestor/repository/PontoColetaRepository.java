@@ -1,10 +1,10 @@
 package br.com.ecogestor.repository;
 
-import br.com.ecogestor.entidade.Endereco;
+import br.com.ecogestor.entidade.PontoColeta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface PontoColetaRepository extends JpaRepository<PontoColeta, Long> {
 
 }

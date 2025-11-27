@@ -1,6 +1,7 @@
 package br.com.ecogestor.dto.request;
 
 import br.com.ecogestor.dto.response.ResiduosResponse;
+import br.com.ecogestor.entidade.Endereco;
 import br.com.ecogestor.enums.EnumTipoResiduo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -19,7 +20,5 @@ public class PontoColetaRequest {
     private EnumTipoResiduo tipoResiduo;
     private List<EnumTipoResiduo> materiaisAceitos;
     private Boolean ativo;
-
-
     private Long enderecoId; // referencia ao endereço existente
 }

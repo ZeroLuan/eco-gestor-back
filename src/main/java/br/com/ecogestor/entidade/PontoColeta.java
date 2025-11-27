@@ -19,6 +19,7 @@ import java.util.List;
 public class PontoColeta {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,7 +35,7 @@ public class PontoColeta {
 
     // Muitos pontos de coleta podem ter um endereço
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "endereco_id")
+    @JoinColumn(name = "fk_endereco")
     private Endereco endereco;
 
     @ElementCollection(fetch = FetchType.EAGER)

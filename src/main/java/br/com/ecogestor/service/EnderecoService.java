@@ -5,8 +5,11 @@ import br.com.ecogestor.dto.response.EnderecoResponse;
 import br.com.ecogestor.entidade.Endereco;
 import br.com.ecogestor.mapper.EnderecoMapper;
 import br.com.ecogestor.repository.EnderecoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class EnderecoService {
@@ -17,9 +20,22 @@ public class EnderecoService {
     @Autowired
     EnderecoMapper enderecoMapper;
 
-    public EnderecoResponse criarEndereco(EnderecoRequest enderecoRequest) {
+    @Transactional
+    public EnderecoResponse criarEndereco(EnderecoRequest request) {
 
-        Endereco endereco = enderecoMapper.toEntity(enderecoRequest);
+        Endereco endereco = enderecoMapper.toEntity(request);
+        endereco.setDataInicio(LocalDateTime.now());
+
+        return enderecoMapper.toResponse(enderecoRepository.save(endereco));
+    }
+
+    @Transactional
+    public EnderecoResponse editarEndereco(Long id, EnderecoRequest request) {
+
+        Endereco endereco = enderecoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+
+        enderecoMapper.atualizar(endereco, request);
 
         return enderecoMapper.toResponse(enderecoRepository.save(endereco));
     }
