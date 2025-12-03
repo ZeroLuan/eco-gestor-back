@@ -18,14 +18,17 @@ public class EnderecoController {
     EnderecoService enderecoService;
 
     @PostMapping(path = "/criar")
-    public ResponseEntity<EnderecoResponse> criarEndereco(@RequestBody EnderecoRequest request) {
+    public ResponseEntity<EnderecoResponse> criarEndereco(
+            @RequestBody EnderecoRequest request) {
         log.info("Criando um novo endereço ->");
         return ResponseEntity.ok(enderecoService.criarEndereco(request));
     }
 
 
     @PutMapping(path = "/editar/{id}")
-    public ResponseEntity<EnderecoResponse> editarEndereco(@PathVariable("id") Long id, @RequestBody EnderecoRequest request) {
+    public ResponseEntity<EnderecoResponse> editarEndereco(
+            @PathVariable("id") Long id,
+            @RequestBody EnderecoRequest request) {
         log.info("Editando um endereço ->");
         return ResponseEntity.ok(enderecoService.editarEndereco(id, request));
     }

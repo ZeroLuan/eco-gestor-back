@@ -22,21 +22,16 @@ public class EnderecoService {
 
     @Transactional
     public EnderecoResponse criarEndereco(EnderecoRequest request) {
-
         Endereco endereco = enderecoMapper.toEntity(request);
         endereco.setDataInicio(LocalDateTime.now());
-
         return enderecoMapper.toResponse(enderecoRepository.save(endereco));
     }
 
     @Transactional
     public EnderecoResponse editarEndereco(Long id, EnderecoRequest request) {
-
         Endereco endereco = enderecoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
-
         enderecoMapper.atualizar(endereco, request);
-
         return enderecoMapper.toResponse(enderecoRepository.save(endereco));
     }
 

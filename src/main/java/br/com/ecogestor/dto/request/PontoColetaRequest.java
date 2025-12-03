@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 public class PontoColetaRequest {
 
+    private Long id;
     private String nomePonto;
     private EnumTipoResiduo tipoResiduo;
     private List<EnumTipoResiduo> materiaisAceitos;

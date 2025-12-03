@@ -1,12 +1,17 @@
 package br.com.ecogestor.mapper;
 
 import br.com.ecogestor.dto.request.PontoColetaRequest;
+import br.com.ecogestor.dto.response.EnderecoResponse;
 import br.com.ecogestor.dto.response.PontoColetaResponse;
 import br.com.ecogestor.entidade.PontoColeta;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PontoColetaMapper {
+
+    @Autowired
+    private EnderecoMapper enderecoMapper;
 
     public PontoColeta toEntity(PontoColetaRequest pontoColetaRequest) {
         PontoColeta pontoColeta = new PontoColeta();
@@ -27,6 +32,10 @@ public class PontoColetaMapper {
         response.setTipoResiduo(entity.getTipoResiduo());
         response.setMateriaisAceitos(entity.getMateriaisAceitos());
         response.setAtivo(entity.getAtivo());
+
+        if (entity.getEndereco() != null) {
+            response.setEndereco(enderecoMapper.toResponse(entity.getEndereco()));
+        }
 
 
         return response;

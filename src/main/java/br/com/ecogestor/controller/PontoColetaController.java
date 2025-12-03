@@ -5,11 +5,10 @@ import br.com.ecogestor.dto.response.PontoColetaResponse;
 import br.com.ecogestor.service.PontoColetaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,9 +19,30 @@ public class PontoColetaController {
     PontoColetaService pontoColetaService;
 
     @PostMapping(path = "/criar")
-    public ResponseEntity<PontoColetaResponse> criar(@RequestBody PontoColetaRequest pontoColetaRequest) {
-        log.info("Criando ponto de coleta");
+    public ResponseEntity<PontoColetaResponse> criar(
+            @RequestBody PontoColetaRequest pontoColetaRequest) {
+        log.info("Criando ponto de coleta ->");
         return ResponseEntity.ok(pontoColetaService.criar(pontoColetaRequest));
+    }
+
+    @PutMapping(path = "/editar/{id}")
+    public ResponseEntity<PontoColetaResponse> editar(
+            @PathVariable("id") Long id,
+            @RequestBody PontoColetaRequest request) {
+        log.info("Editando ponto de coleta ->");
+        return ResponseEntity.ok(pontoColetaService.editar(id, request));
+    }
+
+    @DeleteMapping(path = "remove/{id}")
+    public ResponseEntity<PontoColetaResponse> remover(@PathVariable("id") Long id) {
+        log.info("Excluindo ponto de coleta ->");
+        return ResponseEntity.ok(PontoColetaService.remover(id));
+    }
+
+    @GetMapping(path = "/busca/paginada")
+    public Page<PontoColetaResponse> buscarPontosColetaPaginado(Pageable peageable){
+        log.info("Buscando ponto de coleta paginado ->");
+        return pontoColetaService.buscarPontosColetaPaginado(peageable);
     }
 
 }

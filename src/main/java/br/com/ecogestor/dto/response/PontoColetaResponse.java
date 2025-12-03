@@ -17,10 +17,10 @@ public class PontoColetaResponse {
 
     private Long id;
     private String nomePonto;
-    private EnderecoResponse endereco;
     private EnumTipoResiduo tipoResiduo;
-    private List<EnumTipoResiduo> materiaisAceitos;
+    private EnderecoResponse endereco;
     private Boolean ativo;
+    private List<EnumTipoResiduo> materiaisAceitos;
 
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
