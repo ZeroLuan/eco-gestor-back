@@ -22,10 +22,6 @@ public class Residuos {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ponto_coleta_id")
-    private PontoColeta pontoColeta;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_residuo", nullable = false)
     private EnumTipoResiduo tipoResiduo;
