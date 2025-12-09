@@ -7,11 +7,11 @@ import br.com.ecogestor.entidade.PontoColeta;
 import br.com.ecogestor.mapper.PontoColetaMapper;
 import br.com.ecogestor.repository.EnderecoRepository;
 import br.com.ecogestor.repository.PontoColetaRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class PontoColetaService {
 
     @Autowired
-    public PontoColetaRepository pontoColetaRepository;
+    PontoColetaRepository pontoColetaRepository;
 
     @Autowired
     EnderecoRepository enderecoRepository;
@@ -36,6 +36,11 @@ public class PontoColetaService {
         return pontoColetaMapper.toResponse(pontoColetaRepository.save(pontoColeta));
     }
 
+    @Transactional(readOnly = true)
+    public Page<PontoColetaResponse> buscarPontosColetaPaginado(Pageable pageable) {
+        return pontoColetaRepository.buscaTodosRegistroAtivos(pageable).map(pontoColetaMapper::toResponse);
+    }
+
     @Transactional
     public PontoColetaResponse editar(Long id, PontoColetaRequest request) {
         PontoColeta pontoColeta = buscarPorId(id);
@@ -44,25 +49,44 @@ public class PontoColetaService {
             Endereco endereco = buscarEnderecoPorId(request.getEnderecoId());
             pontoColeta.setEndereco(endereco);
         }
+        pontoColeta = pontoColetaRepository.save(pontoColeta);
+        return pontoColetaMapper.toResponse(pontoColeta);
+    }
+
+    @Transactional
+    public PontoColetaResponse remover(Long id) {
+        PontoColeta pontoColeta = buscarPorId(id);
         pontoColeta.setDataFim(LocalDateTime.now());
-        pontoColetaRepository.save(pontoColeta);
-        return null;
+        pontoColeta = pontoColetaRepository.save(pontoColeta);
+        return pontoColetaMapper.toResponse(pontoColeta);
     }
 
-    public static PontoColetaResponse remover(Long id) {
-        return null;
-    }
-
+    @Transactional(readOnly = true)
     public PontoColeta buscarPorId(Long id) {
-        return pontoColetaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Erro ao procurar ponto de coleta por ID"));
+        if (id == null) {
+            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
+        }
+        return pontoColetaRepository.buscaUmRegistroAtivo(id).orElseThrow(() -> new RuntimeException("Ponto de Coleta não encontrado ou já removido: id=" + id));
     }
 
+    @Transactional(readOnly = true)
     public Endereco buscarEnderecoPorId(Long id) {
-        return enderecoRepository.findEnderecoById(id);
+        return enderecoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Erro ao procurar Endereço"));
     }
 
-    public Page<PontoColetaResponse> buscarPontosColetaPaginado(Pageable pageable) {
-        return pontoColetaRepository.findAll(pageable).map(pontoColetaMapper::toResponse);
+    @Transactional(readOnly = true)
+    public Page<PontoColetaResponse> buscarComFiltros(PontoColetaRequest filtro, Pageable pageable) {
+        String tipoResiduo = filtro != null && filtro.getTipoResiduo() != null
+                ? filtro.getTipoResiduo().toString()
+                : null;
+
+        String nomePonto = filtro != null ? filtro.getNomePonto() : null;
+        String enderecoNome = filtro != null ? filtro.getEnderecoNome() : null;
+
+        return pontoColetaRepository
+                .buscarComFiltros(nomePonto, tipoResiduo, enderecoNome, pageable)
+                .map(pontoColetaMapper::toResponse);
     }
+
 }

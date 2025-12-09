@@ -25,6 +25,12 @@ public class PontoColetaController {
         return ResponseEntity.ok(pontoColetaService.criar(pontoColetaRequest));
     }
 
+    @GetMapping(path = "/busca/paginada")
+    public Page<PontoColetaResponse> buscarPontosColetaPaginado(Pageable peageable){
+        log.info("Buscando ponto de coleta paginado ->");
+        return pontoColetaService.buscarPontosColetaPaginado(peageable);
+    }
+
     @PutMapping(path = "/editar/{id}")
     public ResponseEntity<PontoColetaResponse> editar(
             @PathVariable("id") Long id,
@@ -33,16 +39,18 @@ public class PontoColetaController {
         return ResponseEntity.ok(pontoColetaService.editar(id, request));
     }
 
-    @DeleteMapping(path = "remove/{id}")
+    @DeleteMapping(path = "/remove/{id}")
     public ResponseEntity<PontoColetaResponse> remover(@PathVariable("id") Long id) {
         log.info("Excluindo ponto de coleta ->");
-        return ResponseEntity.ok(PontoColetaService.remover(id));
+        return ResponseEntity.ok(pontoColetaService.remover(id));
     }
 
-    @GetMapping(path = "/busca/paginada")
-    public Page<PontoColetaResponse> buscarPontosColetaPaginado(Pageable peageable){
-        log.info("Buscando ponto de coleta paginado ->");
-        return pontoColetaService.buscarPontosColetaPaginado(peageable);
+    @PostMapping(path = "/busca/filtro")
+    public Page<PontoColetaResponse> buscarComFiltros(
+            @RequestBody PontoColetaRequest filtro,
+            Pageable pageable) {
+        log.info("Buscando ponto de coleta com filtros ->");
+        return pontoColetaService.buscarComFiltros(filtro, pageable);
     }
 
 }

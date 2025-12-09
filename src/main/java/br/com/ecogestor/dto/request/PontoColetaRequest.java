@@ -22,4 +22,6 @@ public class PontoColetaRequest {
     private List<EnumTipoResiduo> materiaisAceitos;
     private Boolean ativo;
     private Long enderecoId; // referencia ao endereço existente
+    // Campo utilizado apenas para filtro na busca. No front é exibido como "Endereço" (nome do endereço)
+    private String enderecoNome;
 }
