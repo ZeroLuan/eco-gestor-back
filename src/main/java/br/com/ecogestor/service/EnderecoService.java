@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class EnderecoService {
 
     @Autowired
-    EnderecoRepository enderecoRepository;
+    private EnderecoRepository enderecoRepository;
 
     @Autowired
-    EnderecoMapper enderecoMapper;
+    private EnderecoMapper enderecoMapper;
 
     @Transactional
     public EnderecoResponse criarEndereco(EnderecoRequest request) {

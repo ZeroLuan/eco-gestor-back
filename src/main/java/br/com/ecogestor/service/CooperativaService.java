@@ -1,6 +1,5 @@
 package br.com.ecogestor.service;
 
-
 import br.com.ecogestor.dto.request.CooperativaRequest;
 import br.com.ecogestor.dto.response.CooperativaResponse;
 import br.com.ecogestor.entidade.Cooperativa;
@@ -18,10 +17,10 @@ public class CooperativaService {
 
 
     @Autowired
-    public CooperativaRepository cooperativaRepository;
+    private CooperativaRepository cooperativaRepository;
 
     @Autowired
-    CooperativaMapper cooperativaMapper;
+    private CooperativaMapper cooperativaMapper;
 
     @Transactional
     public CooperativaResponse criar(CooperativaRequest request) {

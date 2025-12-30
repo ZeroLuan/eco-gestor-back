@@ -2,6 +2,7 @@ package br.com.ecogestor.controller;
 
 import br.com.ecogestor.dto.request.PontoColetaRequest;
 import br.com.ecogestor.dto.response.PontoColetaResponse;
+import br.com.ecogestor.enums.EnumTipoResiduo;
 import br.com.ecogestor.service.PontoColetaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -51,6 +54,13 @@ public class PontoColetaController {
             Pageable pageable) {
         log.info("Buscando ponto de coleta com filtros ->");
         return pontoColetaService.buscarComFiltros(filtro, pageable);
+    }
+
+    @GetMapping(path = "/busca/tipo-residuo/{tipoResiduo}")
+    public ResponseEntity<List<PontoColetaResponse>> buscarPorTipoResiduo(
+            @PathVariable("tipoResiduo") EnumTipoResiduo tipoResiduo){
+        log.info("Buscando ponto de coleta por tipo de resíduo ->");
+        return ResponseEntity.ok(pontoColetaService.buscarPorTipoResiduo(tipoResiduo));
     }
 
 }

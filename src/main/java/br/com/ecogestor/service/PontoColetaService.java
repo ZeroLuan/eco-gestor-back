@@ -4,6 +4,7 @@ import br.com.ecogestor.dto.request.PontoColetaRequest;
 import br.com.ecogestor.dto.response.PontoColetaResponse;
 import br.com.ecogestor.entidade.Endereco;
 import br.com.ecogestor.entidade.PontoColeta;
+import br.com.ecogestor.enums.EnumTipoResiduo;
 import br.com.ecogestor.mapper.PontoColetaMapper;
 import br.com.ecogestor.repository.EnderecoRepository;
 import br.com.ecogestor.repository.PontoColetaRepository;
@@ -14,18 +15,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PontoColetaService {
 
     @Autowired
-    PontoColetaRepository pontoColetaRepository;
+    private PontoColetaRepository pontoColetaRepository;
 
     @Autowired
-    EnderecoRepository enderecoRepository;
+    private EnderecoRepository enderecoRepository;
 
     @Autowired
-    PontoColetaMapper pontoColetaMapper;
+    private PontoColetaMapper pontoColetaMapper;
 
     @Transactional
     public PontoColetaResponse criar(PontoColetaRequest request) {
@@ -43,6 +45,9 @@ public class PontoColetaService {
 
     @Transactional
     public PontoColetaResponse editar(Long id, PontoColetaRequest request) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
+        }
         PontoColeta pontoColeta = buscarPorId(id);
         pontoColetaMapper.atualizar(pontoColeta, request);
         if (request.getEnderecoId() != null) {
@@ -55,6 +60,9 @@ public class PontoColetaService {
 
     @Transactional
     public PontoColetaResponse remover(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
+        }
         PontoColeta pontoColeta = buscarPorId(id);
         pontoColeta.setDataFim(LocalDateTime.now());
         pontoColeta = pontoColetaRepository.save(pontoColeta);
@@ -71,6 +79,9 @@ public class PontoColetaService {
 
     @Transactional(readOnly = true)
     public Endereco buscarEnderecoPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
+        }
         return enderecoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Erro ao procurar Endereço"));
     }
@@ -89,4 +100,11 @@ public class PontoColetaService {
                 .map(pontoColetaMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public List<PontoColetaResponse> buscarPorTipoResiduo(EnumTipoResiduo tipoResiduo) {
+        if(tipoResiduo == null){
+            throw new IllegalArgumentException("O tipo de Resíduo é nullo");
+        }
+        return pontoColetaRepository.buscarPorTipoResiduo(tipoResiduo).stream().map(pontoColetaMapper::toResponse).toList();
+    }
 }

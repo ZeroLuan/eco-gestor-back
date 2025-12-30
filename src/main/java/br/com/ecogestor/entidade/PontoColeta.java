@@ -29,9 +29,17 @@ public class PontoColeta {
     @Column(name = "ativo")
     private Boolean ativo;
 
-    @Column(name = "tipo_residuo")
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_residuo")
     private EnumTipoResiduo tipoResiduo;
+
+    @OneToMany(
+            mappedBy = "pontoColeta",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Residuos> residuos;
 
     // Muitos pontos de coleta podem ter um endereço
     @ManyToOne(fetch = FetchType.LAZY)

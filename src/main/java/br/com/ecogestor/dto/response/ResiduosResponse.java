@@ -1,11 +1,13 @@
 package br.com.ecogestor.dto.response;
 
+import br.com.ecogestor.entidade.PontoColeta;
 import br.com.ecogestor.enums.EnumTipoResiduo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -15,8 +17,11 @@ import java.time.LocalDateTime;
 public class ResiduosResponse {
 
     private Long id;
+    private LocalDate dataColeta;
     private EnumTipoResiduo tipoResiduo;
     private Double peso;
+    private PontoColeta pontoColeta;
+    private String Local;
     private String nomeResponsavel;
 
     private LocalDateTime dataInicio;

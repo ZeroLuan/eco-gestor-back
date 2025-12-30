@@ -24,7 +24,6 @@ public class EnderecoController {
         return ResponseEntity.ok(enderecoService.criarEndereco(request));
     }
 
-
     @PutMapping(path = "/editar/{id}")
     public ResponseEntity<EnderecoResponse> editarEndereco(
             @PathVariable("id") Long id,

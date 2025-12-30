@@ -19,9 +19,10 @@ import java.time.LocalDateTime;
 public class LicencaAmbientalService {
 
     @Autowired
-    public LicencaAmbientalRepository licencaAmbientalRepository;
+    private LicencaAmbientalRepository licencaAmbientalRepository;
+
     @Autowired
-    LicencaAmbientalMapper licencaAmbientalMapper;
+    private LicencaAmbientalMapper licencaAmbientalMapper;
 
     @Transactional
     public LicencaAmbientalResponse criar(LicencaAmbientalRequest request) {
