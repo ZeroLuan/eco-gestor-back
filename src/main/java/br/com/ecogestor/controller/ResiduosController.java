@@ -25,6 +25,12 @@ public class ResiduosController {
         return ResponseEntity.ok(residuosService.criar(residuosRequest));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResiduosResponse> buscarPorId(@PathVariable Long id) {
+        log.info("Buscando resíduo por ID ->");
+        return ResponseEntity.ok(residuosService.buscarResiduoResponsePorId(id));
+    }
+
     @GetMapping(path = "/busca/paginada")
     public Page<ResiduosResponse> buscarResiduosPaginado(Pageable peageable){
         log.info("Buscando resíduos paginados ->");

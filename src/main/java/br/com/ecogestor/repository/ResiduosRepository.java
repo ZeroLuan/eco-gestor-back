@@ -23,15 +23,20 @@ public interface ResiduosRepository extends JpaRepository<Residuos, Long>{
 
     @Query("SELECT r FROM Residuos r " +
             "LEFT JOIN r.pontoColeta p " +
+            "LEFT JOIN p.endereco e " +
             "WHERE r.dataFim IS NULL " +
             "AND (:tipoResiduo IS NULL OR r.tipoResiduo = :tipoResiduo) " +
             "AND (:nomeResponsavel IS NULL OR LOWER(r.nomeResponsavel) LIKE LOWER(CONCAT('%', :nomeResponsavel, '%'))) " +
-            "AND (:dataColeta IS NULL OR r.dataColeta = :dataColeta) " +
+            "AND (:dataInicio IS NULL OR r.dataColeta >= :dataInicio) " +
+            "AND (:dataFim IS NULL OR r.dataColeta <= :dataFim) " +
+            "AND (:local IS NULL OR LOWER(e.cidade) LIKE LOWER(CONCAT('%', :local, '%'))) " +
             "AND (:pontoColetaId IS NULL OR p.id = :pontoColetaId)")
     Page<Residuos> buscarComFiltros(
             @Param("tipoResiduo") EnumTipoResiduo tipoResiduo,
             @Param("nomeResponsavel") String nomeResponsavel,
-            @Param("dataColeta") LocalDate dataColeta,
+            @Param("dataInicio") LocalDate dataInicio,
+            @Param("dataFim") LocalDate dataFim,
+            @Param("local") String local,
             @Param("pontoColetaId") Long pontoColetaId,
             Pageable pageable);
 

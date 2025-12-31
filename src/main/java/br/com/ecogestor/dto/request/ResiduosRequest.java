@@ -18,5 +18,8 @@ public class ResiduosRequest {
     private Double peso;
     private String nomeResponsavel;
     private LocalDate dataColeta;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private String local;
 
 }

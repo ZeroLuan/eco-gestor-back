@@ -80,12 +80,17 @@ public class ResiduosService {
                 .buscarComFiltros(
                         filtro != null ? filtro.getTipoResiduo() : null,
                         filtro != null ? filtro.getNomeResponsavel() : null,
-                        filtro != null ? filtro.getDataColeta() : null,
+                        filtro != null ? filtro.getDataInicio() : null,
+                        filtro != null ? filtro.getDataFim() : null,
+                        filtro != null ? filtro.getLocal() : null,
                         filtro != null ? filtro.getIdPontoColeta() : null,
                         pageable)
                 .map(residuosMapper::toResponse);
     }
+
+    @Transactional
+    public ResiduosResponse buscarResiduoResponsePorId(Long id) {
+        Residuos residuos = buscarPorId(id);
+        return residuosMapper.toResponse(residuos);
+    }
 }
-
-
-
