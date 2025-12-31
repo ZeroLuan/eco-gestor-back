@@ -5,7 +5,15 @@ import lombok.Getter;
 @Getter
 public enum EnumTipoLicenca {
 
-    LP,
-    LI,
-    L0,
+    LP("LP", "Licença Prévia"),
+    LI("LI", "Licença de Instalação"),
+    L0("L0", "Licença Zero");
+
+    private final String value;
+    private final String label;
+
+    EnumTipoLicenca(String value, String label) {
+        this.value = value;
+        this.label = label;
+    }
 }

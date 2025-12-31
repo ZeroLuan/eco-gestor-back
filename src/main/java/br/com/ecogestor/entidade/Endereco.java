@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "endereco")
+@Table(name = "tb_endereco")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,6 +31,9 @@ public class Endereco {
 
     @Column(name = "complemento")
     private String complemento;
+
+    @OneToMany(mappedBy = "endereco")
+    private List<Empresa> empresas;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")

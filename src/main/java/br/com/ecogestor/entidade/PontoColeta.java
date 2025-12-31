@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "ponto_coleta")
+@Table(name = "tb_ponto_coleta")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,6 +32,10 @@ public class PontoColeta {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_residuo")
     private EnumTipoResiduo tipoResiduo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cooperativa_id", nullable = false)
+    private Cooperativa cooperativa;
 
     @OneToMany(
             mappedBy = "pontoColeta",

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "residuos")
+@Table(name = "tb_residuos")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -7,40 +7,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "cooperativa")
+@Table(name = "tb_cooperativa")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cooperativa {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "nome", nullable = false)
-    private String nome;
+public class Cooperativa extends Empresa {
 
     @Column(name = "nome_responsavel", nullable = false)
     private String responsavel;
-
-    @Column(name = "cnpj", nullable = false, unique = true)
-    private String cnpj;
 
     @Column(name = "status_cooperativa")
     @Enumerated(EnumType.STRING)
     private EnumStatus statusCooperativa;
 
-    @Column(name = "data_inicio")
-    private LocalDateTime dataInicio;
+    @OneToMany(mappedBy = "cooperativa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PontoColeta> pontosColetas;
 
-    @Column(name = "data_fim")
-    private LocalDateTime dataFim;
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.PERSIST)
+    private List<LicencaAmbiental> licencasAmbientais;
 
+    @Column(name = "status_licenca")
+    @Enumerated(EnumType.STRING)
+    private EnumStatus statusLicenca;
 
 }

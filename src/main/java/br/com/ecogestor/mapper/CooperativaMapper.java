@@ -21,7 +21,6 @@ public class CooperativaMapper {
     public Cooperativa toEntity(CooperativaRequest cooperativaRequest) {
         Cooperativa cooperativa = new Cooperativa();
 
-        cooperativa.setNome(cooperativaRequest.getNome());
         cooperativa.setResponsavel(cooperativaRequest.getResponsavel());
         cooperativa.setCnpj(cooperativaRequest.getCnpj());
         cooperativa.setStatusCooperativa(cooperativaRequest.getStatusCooperativa());
@@ -33,7 +32,6 @@ public class CooperativaMapper {
         CooperativaResponse response = new CooperativaResponse();
 
         response.setId(entity.getId());
-        response.setNome(entity.getNome());
         response.setResponsavel(entity.getResponsavel());
         response.setCnpj(entity.getCnpj());
         response.setStatusCooperativa(
@@ -48,7 +46,6 @@ public class CooperativaMapper {
 
 
     public void atualizar(Cooperativa cooperativa, CooperativaRequest request) {
-        cooperativa.setNome(request.getNome());
         cooperativa.setResponsavel(request.getResponsavel());
         cooperativa.setCnpj(request.getCnpj());
         cooperativa.setStatusCooperativa(request.getStatusCooperativa());

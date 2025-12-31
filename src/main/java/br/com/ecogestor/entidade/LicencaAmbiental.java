@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "licenca-ambiental")
+@Table(name = "tb_licenca_ambiental")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,12 +27,16 @@ public class LicencaAmbiental {
     @Enumerated(EnumType.STRING)
     private EnumTipoLicenca tipoLicenca;
 
-    @Column(name = "numero_licenca", nullable = false)
-    private String numeroLicenca;
-
     @Column(name = "status_licenca")
     @Enumerated(EnumType.STRING)
     private EnumStatus statusLicenca;
+
+    @Column(name = "numero_licenca", nullable = false)
+    private String numeroLicenca;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa;
 
     @Column(name = "validade")
     private LocalDateTime validade;
