@@ -19,6 +19,7 @@ public class PontoColetaResponse {
     private String nomePonto;
     private EnumTipoResiduo tipoResiduo;
     private EnderecoResponse endereco;
+    private CooperativaResponse cooperativa;
     private Boolean ativo;
     private List<EnumTipoResiduo> materiaisAceitos;
 

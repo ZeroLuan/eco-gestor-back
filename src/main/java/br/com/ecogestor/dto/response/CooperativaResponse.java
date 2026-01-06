@@ -17,8 +17,9 @@ public class CooperativaResponse {
     private Long id;
     private String nome;
     private String responsavel;
+    private String telefone;
     private String cnpj;
-    private String statusCooperativa;
+    private EnderecoResponse endereco;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
 

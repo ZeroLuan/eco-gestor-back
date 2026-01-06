@@ -1,13 +1,9 @@
 package br.com.ecogestor.dto.request;
 
-import br.com.ecogestor.entidade.PontoColeta;
-import br.com.ecogestor.enums.EnumStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,8 +11,20 @@ import java.util.List;
 @Setter
 public class CooperativaRequest {
 
-    private String nome;
-    private String responsavel;
+    // Empresa
+    private String nomeEmpresa;
+    private String nomeFantasia;
     private String cnpj;
-    private EnumStatus statusCooperativa;
+    private String telefone;
+    private String email;
+    private String naturezaJuridica;
+    private String cnae;
+
+    // Cooperativa
+    private String nomeResponsavel;
+
+    // Endereço
+    private Long enderecoId;
+    private String enderecoNome;
+
 }

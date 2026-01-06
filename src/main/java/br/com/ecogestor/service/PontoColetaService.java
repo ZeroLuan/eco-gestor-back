@@ -6,7 +6,6 @@ import br.com.ecogestor.entidade.Endereco;
 import br.com.ecogestor.entidade.PontoColeta;
 import br.com.ecogestor.enums.EnumTipoResiduo;
 import br.com.ecogestor.mapper.PontoColetaMapper;
-import br.com.ecogestor.repository.EnderecoRepository;
 import br.com.ecogestor.repository.PontoColetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,10 @@ public class PontoColetaService {
     private PontoColetaRepository pontoColetaRepository;
 
     @Autowired
-    private EnderecoRepository enderecoRepository;
+    private EnderecoService enderecoService;
+
+    @Autowired
+    private CooperativaService cooperativaService;
 
     @Autowired
     private PontoColetaMapper pontoColetaMapper;
@@ -32,8 +34,13 @@ public class PontoColetaService {
     @Transactional
     public PontoColetaResponse criar(PontoColetaRequest request) {
         PontoColeta pontoColeta = pontoColetaMapper.toEntity(request);
-        Endereco endereco = buscarEnderecoPorId(request.getEnderecoId());
+        Endereco endereco = enderecoService.buscarEnderecoPorId(request.getEnderecoId());
         pontoColeta.setEndereco(endereco);
+
+        if (request.getCooperativaId() != null) {
+            pontoColeta.setCooperativa(cooperativaService.buscarPorId(request.getCooperativaId()));
+        }
+
         pontoColeta.setDataInicio(LocalDateTime.now());
         return pontoColetaMapper.toResponse(pontoColetaRepository.save(pontoColeta));
     }
@@ -51,8 +58,11 @@ public class PontoColetaService {
         PontoColeta pontoColeta = buscarPorId(id);
         pontoColetaMapper.atualizar(pontoColeta, request);
         if (request.getEnderecoId() != null) {
-            Endereco endereco = buscarEnderecoPorId(request.getEnderecoId());
+            Endereco endereco = enderecoService.buscarEnderecoPorId(request.getEnderecoId());
             pontoColeta.setEndereco(endereco);
+        }
+        if (request.getCooperativaId() != null) {
+            pontoColeta.setCooperativa(cooperativaService.buscarPorId(request.getCooperativaId()));
         }
         pontoColeta = pontoColetaRepository.save(pontoColeta);
         return pontoColetaMapper.toResponse(pontoColeta);
@@ -75,15 +85,6 @@ public class PontoColetaService {
             throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
         }
         return pontoColetaRepository.buscaUmRegistroAtivo(id).orElseThrow(() -> new RuntimeException("Ponto de Coleta não encontrado ou já removido: id=" + id));
-    }
-
-    @Transactional(readOnly = true)
-    public Endereco buscarEnderecoPorId(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
-        }
-        return enderecoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Erro ao procurar Endereço"));
     }
 
     @Transactional(readOnly = true)

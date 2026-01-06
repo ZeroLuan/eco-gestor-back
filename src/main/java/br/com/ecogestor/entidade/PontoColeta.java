@@ -34,7 +34,7 @@ public class PontoColeta {
     private EnumTipoResiduo tipoResiduo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cooperativa_id", nullable = false)
+    @JoinColumn(name = "cooperativa_id")
     private Cooperativa cooperativa;
 
     @OneToMany(

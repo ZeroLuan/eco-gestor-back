@@ -35,5 +35,13 @@ public class EnderecoService {
         return enderecoMapper.toResponse(enderecoRepository.save(endereco));
     }
 
+    @Transactional
+    public Endereco buscarEnderecoPorId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID do Ponto de Coleta não pode ser nulo");
+        }
+        return enderecoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Erro ao procurar Endereço"));
+    }
 
 }

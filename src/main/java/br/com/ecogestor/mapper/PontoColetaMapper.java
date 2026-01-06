@@ -1,6 +1,7 @@
 package br.com.ecogestor.mapper;
 
 import br.com.ecogestor.dto.request.PontoColetaRequest;
+import br.com.ecogestor.dto.response.CooperativaResponse;
 import br.com.ecogestor.dto.response.EnderecoResponse;
 import br.com.ecogestor.dto.response.PontoColetaResponse;
 import br.com.ecogestor.entidade.PontoColeta;
@@ -12,6 +13,9 @@ public class PontoColetaMapper {
 
     @Autowired
     private EnderecoMapper enderecoMapper;
+
+    @Autowired
+    private CooperativaMapper cooperativaMapper;
 
     public PontoColeta toEntity(PontoColetaRequest pontoColetaRequest) {
         PontoColeta pontoColeta = new PontoColeta();
@@ -35,6 +39,10 @@ public class PontoColetaMapper {
 
         if (entity.getEndereco() != null) {
             response.setEndereco(enderecoMapper.toResponse(entity.getEndereco()));
+        }
+
+        if (entity.getCooperativa() != null) {
+            response.setCooperativa(cooperativaMapper.toResponse(entity.getCooperativa()));
         }
 
 
