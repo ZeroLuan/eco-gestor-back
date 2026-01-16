@@ -39,4 +39,7 @@ public interface PontoColetaRepository extends JpaRepository<PontoColeta, Long> 
 
     @Query(value = "SELECT p FROM PontoColeta p WHERE p.tipoResiduo = :tipoResiduo")
     List<PontoColeta> buscarPorTipoResiduo(EnumTipoResiduo tipoResiduo);
+
+    @Query("SELECT COUNT(p) FROM PontoColeta p WHERE p.dataFim IS NULL")
+    long contarTodosRegistrosAtivos();
 }

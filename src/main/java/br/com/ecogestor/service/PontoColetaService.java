@@ -108,4 +108,9 @@ public class PontoColetaService {
         }
         return pontoColetaRepository.buscarPorTipoResiduo(tipoResiduo).stream().map(pontoColetaMapper::toResponse).toList();
     }
+
+    @Transactional(readOnly = true)
+    public long contarPontosColetaAtivos() {
+        return pontoColetaRepository.contarTodosRegistrosAtivos();
+    }
 }
