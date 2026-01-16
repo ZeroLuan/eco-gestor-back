@@ -40,4 +40,7 @@ public interface ResiduosRepository extends JpaRepository<Residuos, Long>{
             @Param("pontoColetaId") Long pontoColetaId,
             Pageable pageable);
 
+    @Query("SELECT SUM(r.peso) FROM Residuos r WHERE r.dataFim IS NULL AND MONTH(r.dataColeta) = :mes AND YEAR(r.dataColeta) = :ano")
+    Double somarPesoPorMesEAno(@Param("mes") int mes, @Param("ano") int ano);
+
 }

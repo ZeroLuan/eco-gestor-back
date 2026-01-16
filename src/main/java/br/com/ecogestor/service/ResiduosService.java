@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -92,5 +92,12 @@ public class ResiduosService {
     public ResiduosResponse buscarResiduoResponsePorId(Long id) {
         Residuos residuos = buscarPorId(id);
         return residuosMapper.toResponse(residuos);
+    }
+
+    @Transactional
+    public Double somarPesoMesAtual() {
+        LocalDate hoje = LocalDate.now();
+        Double total = residuosRepository.somarPesoPorMesEAno(hoje.getMonthValue(), hoje.getYear());
+        return total != null ? total : 0.0;
     }
 }
