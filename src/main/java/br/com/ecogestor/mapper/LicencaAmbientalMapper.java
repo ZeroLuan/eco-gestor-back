@@ -14,7 +14,8 @@ public class LicencaAmbientalMapper {
         licencaAmbiental.setNumeroLicenca(licencaAmbientalRequest.getNumeroLicenca());
         licencaAmbiental.setTipoLicenca(licencaAmbientalRequest.getTipoLicenca());
         licencaAmbiental.setStatusLicenca(licencaAmbientalRequest.getStatusLicenca());
-        licencaAmbiental.setValidade(licencaAmbientalRequest.getValidade());
+        licencaAmbiental.setDataValidade(licencaAmbientalRequest.getDataValidade());
+        licencaAmbiental.setDataEmissao(licencaAmbientalRequest.getDataEmissao());
 
         return licencaAmbiental;
     }
@@ -26,8 +27,14 @@ public class LicencaAmbientalMapper {
         response.setNumeroLicenca(entity.getNumeroLicenca());
         response.setTipoLicenca(entity.getTipoLicenca());
         response.setStatusLicenca(entity.getStatusLicenca());
-        response.setValidade(entity.getValidade());
+        response.setDataValidade(entity.getDataValidade());
+        response.setDataEmissao(entity.getDataEmissao());
+        response.setDataInicio(entity.getDataInicio());
+        response.setDataFim(entity.getDataFim());
 
+        if (entity.getCooperativa() != null) {
+            response.setCooperativaId(entity.getCooperativa().getId());
+        }
 
         return response;
     }
@@ -36,7 +43,8 @@ public class LicencaAmbientalMapper {
         licencaAmbiental.setNumeroLicenca(request.getNumeroLicenca());
         licencaAmbiental.setTipoLicenca(request.getTipoLicenca());
         licencaAmbiental.setStatusLicenca(request.getStatusLicenca());
-        licencaAmbiental.setValidade(request.getValidade());
+        licencaAmbiental.setDataValidade(request.getDataValidade());
+        licencaAmbiental.setDataEmissao(request.getDataEmissao());
     }
 
 }

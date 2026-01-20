@@ -34,12 +34,15 @@ public class LicencaAmbiental {
     @Column(name = "numero_licenca", nullable = false)
     private String numeroLicenca;
 
-    @ManyToOne
-    @JoinColumn(name = "empresa_id", nullable = false)
-    private Empresa empresa;
+    @Column(name = "data_validade")
+    private LocalDateTime dataValidade;
 
-    @Column(name = "validade")
-    private LocalDateTime validade;
+    @Column(name = "data_emissao")
+    private LocalDateTime dataEmissao;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_cooperativa", nullable = false)
+    private Cooperativa cooperativa;
 
     @Column(name = "data_inicio")
     private LocalDateTime dataInicio;

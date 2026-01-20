@@ -21,7 +21,9 @@ public class LicencaAmbientalResponse {
     private String numeroLicenca;
     private EnumTipoLicenca tipoLicenca;
     private EnumStatus statusLicenca;
-    private LocalDateTime validade;
+    private LocalDateTime dataValidade;
+    private LocalDateTime dataEmissao;
+    private Long cooperativaId;
 
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;

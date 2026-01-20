@@ -24,7 +24,8 @@ public class Cooperativa extends Empresa {
     @OneToMany(mappedBy = "cooperativa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PontoColeta> pontosColetas;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cooperativa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LicencaAmbiental> licencasAmbientais;
+
 
 }
