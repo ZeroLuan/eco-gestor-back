@@ -24,6 +24,7 @@ public class CooperativaMapper {
         cooperativa.setCnae(cooperativaRequest.getCnae());
 
         cooperativa.setResponsavel(cooperativaRequest.getNomeResponsavel());
+        cooperativa.setStatusCooperativa(cooperativaRequest.getStatusCooperativa());
 
         return cooperativa;
     }
@@ -36,6 +37,7 @@ public class CooperativaMapper {
         response.setResponsavel(entity.getResponsavel());
         response.setTelefone(entity.getTelefone());
         response.setCnpj(entity.getCnpj());
+        response.setStatusCooperativa(entity.getStatusCooperativa());
         response.setDataInicio(entity.getDataInicio());
         response.setDataFim(entity.getDataFim());
 
@@ -55,6 +57,7 @@ public class CooperativaMapper {
         cooperativa.setNaturezaJuridica(request.getNaturezaJuridica());
         cooperativa.setCnae(request.getCnae());
         cooperativa.setResponsavel(request.getNomeResponsavel());
+        cooperativa.setStatusCooperativa(request.getStatusCooperativa());
     }
 
 }

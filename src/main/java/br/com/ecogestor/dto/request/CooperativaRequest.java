@@ -22,6 +22,7 @@ public class CooperativaRequest {
 
     // Cooperativa
     private String nomeResponsavel;
+    private Boolean statusCooperativa;
 
     // Endereço
     private Long enderecoId;

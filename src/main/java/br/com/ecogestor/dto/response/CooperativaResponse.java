@@ -19,6 +19,7 @@ public class CooperativaResponse {
     private String responsavel;
     private String telefone;
     private String cnpj;
+    private Boolean statusCooperativa;
     private EnderecoResponse endereco;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;

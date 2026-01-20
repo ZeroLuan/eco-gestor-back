@@ -18,6 +18,9 @@ public class Cooperativa extends Empresa {
     @Column(name = "nome_responsavel", nullable = false)
     private String responsavel;
 
+    @Column(name = "status_cooperativa")
+    private Boolean statusCooperativa;
+
     @OneToMany(mappedBy = "cooperativa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PontoColeta> pontosColetas;
 
