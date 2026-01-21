@@ -21,7 +21,7 @@ public class LicencaAmbientalController {
 
     @PostMapping(path = "/criar")
     public ResponseEntity<LicencaAmbientalResponse> criar(@RequestBody LicencaAmbientalRequest licencaAmbientalRequest) {
-        log.info("Criando licença ambiental");
+        log.info("Criando licença ambiental ->");
         return ResponseEntity.ok(licencaAmbientalService.criar(licencaAmbientalRequest));
     }
 

@@ -7,7 +7,7 @@ public enum EnumTipoLicenca {
 
     LP("LP", "Licença Prévia"),
     LI("LI", "Licença de Instalação"),
-    L0("L0", "Licença Zero");
+    L0("L0", "Licença de Operação");
 
     private final String value;
     private final String label;

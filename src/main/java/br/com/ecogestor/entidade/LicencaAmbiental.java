@@ -44,6 +44,10 @@ public class LicencaAmbiental {
     @JoinColumn(name = "fk_cooperativa", nullable = false)
     private Cooperativa cooperativa;
 
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa;
+
     @Column(name = "data_inicio")
     private LocalDateTime dataInicio;
 

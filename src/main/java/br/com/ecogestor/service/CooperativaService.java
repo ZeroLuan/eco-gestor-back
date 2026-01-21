@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CooperativaService {
@@ -35,6 +37,14 @@ public class CooperativaService {
         cooperativa.setDataInicio(LocalDateTime.now());
 
         return cooperativaMapper.toResponse(cooperativaRepository.save(cooperativa));
+    }
+
+    @Transactional(readOnly = true)
+    public List<CooperativaResponse> listarTodas() {
+        return cooperativaRepository.buscaTodosRegistroAtivos()
+                .stream()
+                .map(cooperativaMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

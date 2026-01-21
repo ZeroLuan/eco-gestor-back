@@ -33,6 +33,7 @@ public class LicencaAmbientalService {
         if (request.getCooperativaId() != null) {
             Cooperativa cooperativa = cooperativaService.buscarPorId(request.getCooperativaId());
             licencaAmbiental.setCooperativa(cooperativa);
+            licencaAmbiental.setEmpresa(cooperativa);
         }
 
         licencaAmbiental.setDataInicio(LocalDateTime.now());
@@ -53,6 +54,7 @@ public class LicencaAmbientalService {
         if (request.getCooperativaId() != null) {
             Cooperativa cooperativa = cooperativaService.buscarPorId(request.getCooperativaId());
             licencaAmbiental.setCooperativa(cooperativa);
+            licencaAmbiental.setEmpresa(cooperativa);
         }
 
         return licencaAmbientalMapper.toResponse(licencaAmbientalRepository.save(licencaAmbiental));

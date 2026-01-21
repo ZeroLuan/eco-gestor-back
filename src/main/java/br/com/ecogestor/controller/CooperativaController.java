@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,6 +23,12 @@ public class CooperativaController {
     public ResponseEntity<CooperativaResponse> criar(@RequestBody CooperativaRequest cooperativaRequest) {
         log.info("Cadastrando cooperativa ->");
         return ResponseEntity.ok(cooperativaService.criar(cooperativaRequest));
+    }
+
+    @GetMapping(path = "/listar-todas")
+    public ResponseEntity<List<CooperativaResponse>> listarTodas() {
+        log.info("Listando todas as cooperativas ->");
+        return ResponseEntity.ok(cooperativaService.listarTodas());
     }
 
     @GetMapping(path = "/busca/paginada")
