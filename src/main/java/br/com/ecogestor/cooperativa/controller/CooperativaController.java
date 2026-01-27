@@ -62,6 +62,12 @@ public class CooperativaController {
         log.info("Buscando cooperativas com filtros ->");
         return cooperativaService.buscarComFiltros(filtro, pageable);
     }
+
+    @GetMapping(path = "busca-total-cooperativas-ativas")
+    public ResponseEntity<Long> buscarTotalCooperativasAtivas(){
+        log.info("Buscando o total de cooperativas ativas ->");
+        return ResponseEntity.ok(cooperativaService.buscarTotalCooperativasAtivas());
+    }
 }
 
 

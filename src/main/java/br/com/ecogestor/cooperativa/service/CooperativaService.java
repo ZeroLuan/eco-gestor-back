@@ -103,6 +103,11 @@ public class CooperativaService {
     public CooperativaResponse buscarPorIdResponse(Long id) {
         return cooperativaMapper.toResponse(buscarPorId(id));
     }
+
+    @Transactional
+    public Long buscarTotalCooperativasAtivas() {
+        return cooperativaRepository.buscarTotalCooperativasAtivas();
+    }
 }
 
 

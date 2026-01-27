@@ -37,4 +37,7 @@ public interface CooperativaRepository extends JpaRepository<Cooperativa, Long> 
             @Param("cnpj") String cnpj,
             @Param("enderecoNome") String enderecoNome,
             Pageable pageable);
+
+    @Query("SELECT COUNT(c) FROM Cooperativa c WHERE c.dataFim IS NULL")
+    Long buscarTotalCooperativasAtivas();
 }
