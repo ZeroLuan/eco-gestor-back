@@ -90,4 +90,9 @@ public class LicencaAmbientalService {
                 .buscarComFiltros(numeroLicenca, cooperativaId, pageable)
                 .map(licencaAmbientalMapper::toResponse);
     }
+
+    @Transactional(readOnly = true)
+    public Long buscarTotalLicencasAtivas() {
+        return licencaAmbientalRepository.buscarTotalLicencas();
+    }
 }

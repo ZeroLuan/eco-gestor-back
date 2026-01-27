@@ -27,4 +27,7 @@ public interface LicencaAmbientalRepository extends JpaRepository<LicencaAmbient
             @Param("numeroLicenca") String numeroLicenca,
             @Param("cooperativaId") Long cooperativaId,
             Pageable pageable);
+
+    @Query("SELECT COUNT(l) FROM LicencaAmbiental l WHERE l.dataFim IS NULL")
+    Long buscarTotalLicencas();
 }

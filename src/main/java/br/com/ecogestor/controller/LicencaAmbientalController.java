@@ -56,4 +56,10 @@ public class LicencaAmbientalController {
         log.info("Buscando licenças ambientais com filtros ->");
         return licencaAmbientalService.buscarComFiltros(filtro, pageable);
     }
+
+    @GetMapping(path = "/buscar/total-licencas-ativas")
+    public ResponseEntity<Long> buscarTotalLicencasAtivas(){
+        log.info("Buscando total de licenças ativas");
+        return ResponseEntity.ok(licencaAmbientalService.buscarTotalLicencasAtivas());
+    }
 }
