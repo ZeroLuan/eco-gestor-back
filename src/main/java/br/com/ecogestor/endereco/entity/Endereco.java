@@ -1,0 +1,55 @@
+package br.com.ecogestor.endereco.entity;
+
+import br.com.ecogestor.empresa.entity.Empresa;
+import br.com.ecogestor.shared.enums.EnumEstados;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Table(name = "tb_endereco")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Endereco {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "bairro")
+    private String bairro;
+
+    @Column(name = "cep")
+    private String cep;
+
+    @Column(name = "cidade")
+    private String cidade;
+
+    @Column(name = "complemento")
+    private String complemento;
+
+    @OneToMany(mappedBy = "endereco")
+    private List<Empresa> empresas;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
+    private EnumEstados estado;
+
+    @Column(name = "logradouro")
+    private String logradouro;
+
+    @Column(name = "numero")
+    private String numero;
+
+    @Column(name = "data_inicio")
+    private LocalDateTime dataInicio;
+
+    @Column(name = "data_fim")
+    private LocalDateTime dataFim;
+
+}

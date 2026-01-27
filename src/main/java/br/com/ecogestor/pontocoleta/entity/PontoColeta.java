@@ -1,0 +1,70 @@
+package br.com.ecogestor.pontocoleta.entity;
+
+import br.com.ecogestor.cooperativa.entity.Cooperativa;
+import br.com.ecogestor.endereco.entity.Endereco;
+import br.com.ecogestor.residuos.entity.Residuos;
+import br.com.ecogestor.shared.enums.EnumTipoResiduo;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Table(name = "tb_ponto_coleta")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PontoColeta {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nome_ponto", nullable = false)
+    private String nomePonto;
+
+    @Column(name = "ativo")
+    private Boolean ativo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_residuo")
+    private EnumTipoResiduo tipoResiduo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cooperativa_id")
+    private Cooperativa cooperativa;
+
+    @OneToMany(
+            mappedBy = "pontoColeta",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Residuos> residuos;
+
+    // Muitos pontos de coleta podem ter um endereço
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_endereco")
+    private Endereco endereco;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "ponto_coleta_materiais",
+            joinColumns = @JoinColumn(name = "ponto_id")
+    )
+    @Column(name = "material_aceito")
+    @Enumerated(EnumType.STRING)
+    private List<EnumTipoResiduo> materiaisAceitos;
+
+    @Column(name = "data_inicio")
+    private LocalDateTime dataInicio;
+
+    @Column(name = "data_fim")
+    private LocalDateTime dataFim;
+}
