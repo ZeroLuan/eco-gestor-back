@@ -35,3 +35,14 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Security - JWT Keys ###
+src/main/resources/app.key
+src/main/resources/app.pub
+app.key
+app.pub
+
+### Environment Variables ###
+.env
+.env.local
+.env.production

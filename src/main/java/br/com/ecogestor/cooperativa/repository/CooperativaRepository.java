@@ -28,6 +28,8 @@ public interface CooperativaRepository extends JpaRepository<Cooperativa, Long> 
             "WHERE c.dataFim IS NULL " +
             "AND (:nomeEmpresa IS NULL OR LOWER(c.nomeEmpresa) LIKE LOWER(CONCAT('%', :nomeEmpresa, '%'))) " +
             "AND (:cnpj IS NULL OR c.cnpj = :cnpj) " +
+            "AND (:telefone IS NULL OR c.telefone = :telefone) " +
+            "AND (:statusCooperativa IS NULL OR c.statusCooperativa = :statusCooperativa) " +
             "AND (:enderecoNome IS NULL OR " +
             "     LOWER(e.logradouro) LIKE LOWER(CONCAT('%', :enderecoNome, '%')) OR " +
             "     LOWER(e.bairro) LIKE LOWER(CONCAT('%', :enderecoNome, '%')) OR " +
@@ -35,6 +37,8 @@ public interface CooperativaRepository extends JpaRepository<Cooperativa, Long> 
     Page<Cooperativa> buscarComFiltros(
             @Param("nomeEmpresa") String nomeEmpresa,
             @Param("cnpj") String cnpj,
+            @Param("telefone") String telefone,
+            @Param("statusCooperativa") Boolean statusCooperativa,
             @Param("enderecoNome") String enderecoNome,
             Pageable pageable);
 

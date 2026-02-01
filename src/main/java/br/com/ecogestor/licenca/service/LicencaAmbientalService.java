@@ -85,15 +85,29 @@ public class LicencaAmbientalService {
     @Transactional(readOnly = true)
     public Page<LicencaAmbientalResponse> buscarComFiltros(LicencaAmbientalRequest filtro, Pageable pageable) {
         String numeroLicenca = filtro != null ? filtro.getNumeroLicenca() : null;
+        String tipoLicenca = filtro != null && filtro.getTipoLicenca() != null 
+                ? filtro.getTipoLicenca().name() : null;
+        String statusLicenca = filtro != null && filtro.getStatusLicenca() != null 
+                ? filtro.getStatusLicenca().name() : null;
+        LocalDateTime dataValidade = filtro != null ? filtro.getDataValidade() : null;
         Long cooperativaId = filtro != null ? filtro.getCooperativaId() : null;
 
         return licencaAmbientalRepository
-                .buscarComFiltros(numeroLicenca, cooperativaId, pageable)
+                .buscarComFiltros(numeroLicenca, tipoLicenca, statusLicenca, dataValidade, cooperativaId, pageable)
                 .map(licencaAmbientalMapper::toResponse);
     }
 
     @Transactional(readOnly = true)
     public Long buscarTotalLicencasAtivas() {
         return licencaAmbientalRepository.buscarTotalLicencas();
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List<LicencaAmbientalResponse> buscarProximasVencer(int limit) {
+        return licencaAmbientalRepository.buscarProximasVencer(limit)
+                .stream()
+                .limit(limit)
+                .map(licencaAmbientalMapper::toResponse)
+                .collect(java.util.stream.Collectors.toList());
     }
 }

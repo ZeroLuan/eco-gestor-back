@@ -92,10 +92,12 @@ public class CooperativaService {
     public Page<CooperativaResponse> buscarComFiltros(CooperativaRequest filtro, Pageable pageable) {
         String nomeEmpresa = filtro != null ? filtro.getNomeEmpresa() : null;
         String cnpj = filtro != null ? filtro.getCnpj() : null;
+        String telefone = filtro != null ? filtro.getTelefone() : null;
+        Boolean statusCooperativa = filtro != null ? filtro.getStatusCooperativa() : null;
         String enderecoNome = filtro != null ? filtro.getEnderecoNome() : null;
 
         return cooperativaRepository
-                .buscarComFiltros(nomeEmpresa, cnpj, enderecoNome, pageable)
+                .buscarComFiltros(nomeEmpresa, cnpj, telefone, statusCooperativa, enderecoNome, pageable)
                 .map(cooperativaMapper::toResponse);
     }
 

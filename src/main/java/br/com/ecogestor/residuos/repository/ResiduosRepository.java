@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -42,5 +43,19 @@ public interface ResiduosRepository extends JpaRepository<Residuos, Long>{
 
     @Query("SELECT SUM(r.peso) FROM Residuos r WHERE r.dataFim IS NULL AND MONTH(r.dataColeta) = :mes AND YEAR(r.dataColeta) = :ano")
     Double somarPesoPorMesEAno(@Param("mes") int mes, @Param("ano") int ano);
+
+    @Query("SELECT r.tipoResiduo as tipo, SUM(r.peso) as peso " +
+           "FROM Residuos r " +
+           "WHERE r.dataFim IS NULL " +
+           "GROUP BY r.tipoResiduo")
+    List<Object[]> somarPesoPorTipo();
+
+    @Query("SELECT MONTH(r.dataColeta) as mes, YEAR(r.dataColeta) as ano, SUM(r.peso) as peso " +
+           "FROM Residuos r " +
+           "WHERE r.dataFim IS NULL " +
+           "AND r.dataColeta >= :dataInicio " +
+           "GROUP BY YEAR(r.dataColeta), MONTH(r.dataColeta) " +
+           "ORDER BY YEAR(r.dataColeta) DESC, MONTH(r.dataColeta) DESC")
+    List<Object[]> somarPesoPorMesUltimos(@Param("dataInicio") LocalDate dataInicio);
 
 }

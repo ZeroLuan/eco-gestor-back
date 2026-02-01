@@ -22,12 +22,24 @@ public interface LicencaAmbientalRepository extends JpaRepository<LicencaAmbient
     @Query("SELECT l FROM LicencaAmbiental l " +
             "WHERE l.dataFim IS NULL " +
             "AND (:numeroLicenca IS NULL OR LOWER(l.numeroLicenca) LIKE LOWER(CONCAT('%', :numeroLicenca, '%'))) " +
+            "AND (:tipoLicenca IS NULL OR l.tipoLicenca = :tipoLicenca) " +
+            "AND (:statusLicenca IS NULL OR l.statusLicenca = :statusLicenca) " +
+            "AND (:dataValidade IS NULL OR DATE(l.dataValidade) = DATE(:dataValidade)) " +
             "AND (:cooperativaId IS NULL OR l.cooperativa.id = :cooperativaId)")
     Page<LicencaAmbiental> buscarComFiltros(
             @Param("numeroLicenca") String numeroLicenca,
+            @Param("tipoLicenca") String tipoLicenca,
+            @Param("statusLicenca") String statusLicenca,
+            @Param("dataValidade") java.time.LocalDateTime dataValidade,
             @Param("cooperativaId") Long cooperativaId,
             Pageable pageable);
 
     @Query("SELECT COUNT(l) FROM LicencaAmbiental l WHERE l.dataFim IS NULL")
     Long buscarTotalLicencas();
+
+    @Query("SELECT l FROM LicencaAmbiental l " +
+            "WHERE l.dataFim IS NULL " +
+            "AND l.dataValidade >= CURRENT_TIMESTAMP " +
+            "ORDER BY l.dataValidade ASC")
+    java.util.List<LicencaAmbiental> buscarProximasVencer(@Param("limit") int limit);
 }

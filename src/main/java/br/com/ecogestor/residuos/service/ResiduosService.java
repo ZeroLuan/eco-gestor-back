@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 @Service
 public class ResiduosService {
@@ -100,5 +104,36 @@ public class ResiduosService {
         LocalDate hoje = LocalDate.now();
         Double total = residuosRepository.somarPesoPorMesEAno(hoje.getMonthValue(), hoje.getYear());
         return total != null ? total : 0.0;
+    }
+
+    @Transactional
+    public Map<String, Double> somarPesoPorTipo() {
+        List<Object[]> resultados = residuosRepository.somarPesoPorTipo();
+        Map<String, Double> mapa = new HashMap<>();
+        
+        for (Object[] resultado : resultados) {
+            String tipo = resultado[0] != null ? resultado[0].toString() : "DESCONHECIDO";
+            Double peso = resultado[1] != null ? ((Number) resultado[1]).doubleValue() : 0.0;
+            mapa.put(tipo, peso);
+        }
+        
+        return mapa;
+    }
+
+    @Transactional
+    public List<Map<String, Object>> somarPesoUltimosMeses(int meses) {
+        LocalDate dataInicio = LocalDate.now().minusMonths(meses);
+        List<Object[]> resultados = residuosRepository.somarPesoPorMesUltimos(dataInicio);
+        List<Map<String, Object>> lista = new ArrayList<>();
+        
+        for (Object[] resultado : resultados) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("mes", resultado[0]);
+            item.put("ano", resultado[1]);
+            item.put("peso", resultado[2] != null ? ((Number) resultado[2]).doubleValue() : 0.0);
+            lista.add(item);
+        }
+        
+        return lista;
     }
 }
