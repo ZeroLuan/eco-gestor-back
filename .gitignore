@@ -37,6 +37,10 @@ out/
 .vscode/
 
 ### Security - JWT Keys ###
+# Chaves criptográficas
+*.key
+*.pem
+*.pub
 src/main/resources/app.key
 src/main/resources/app.pub
 app.key
