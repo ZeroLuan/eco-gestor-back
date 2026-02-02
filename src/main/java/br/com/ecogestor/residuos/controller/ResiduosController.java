@@ -3,6 +3,7 @@ package br.com.ecogestor.residuos.controller;
 import br.com.ecogestor.residuos.dto.request.ResiduosRequest;
 import br.com.ecogestor.residuos.dto.response.ResiduosResponse;
 import br.com.ecogestor.residuos.service.ResiduosService;
+import br.com.ecogestor.atividade.service.AtividadeRecenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +19,15 @@ public class ResiduosController {
     @Autowired
     ResiduosService residuosService;
 
+    @Autowired
+    AtividadeRecenteService atividadeRecenteService;
+
     @PostMapping(path = "/criar")
     public ResponseEntity<ResiduosResponse> criar(@RequestBody ResiduosRequest residuosRequest) {
         log.info("Criando resíduos ->");
-        return ResponseEntity.ok(residuosService.criar(residuosRequest));
+        ResiduosResponse response = residuosService.criar(residuosRequest);
+        atividadeRecenteService.registrarCriacaoResiduo(response.getId(), response.getPeso(), String.valueOf(response.getTipoResiduo()));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

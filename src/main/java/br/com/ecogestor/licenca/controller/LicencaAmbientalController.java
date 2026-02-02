@@ -1,9 +1,9 @@
 package br.com.ecogestor.licenca.controller;
 
-
 import br.com.ecogestor.licenca.service.LicencaAmbientalService;
 import br.com.ecogestor.licenca.dto.request.LicencaAmbientalRequest;
 import br.com.ecogestor.licenca.dto.response.LicencaAmbientalResponse;
+import br.com.ecogestor.atividade.service.AtividadeRecenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +19,15 @@ public class LicencaAmbientalController {
     @Autowired
     LicencaAmbientalService licencaAmbientalService;
 
+    @Autowired
+    AtividadeRecenteService atividadeRecenteService;
+
     @PostMapping(path = "/criar")
     public ResponseEntity<LicencaAmbientalResponse> criar(@RequestBody LicencaAmbientalRequest licencaAmbientalRequest) {
         log.info("Criando licença ambiental ->");
-        return ResponseEntity.ok(licencaAmbientalService.criar(licencaAmbientalRequest));
+        LicencaAmbientalResponse response = licencaAmbientalService.criar(licencaAmbientalRequest);
+        atividadeRecenteService.registrarCriacaoLicenca(response.getId(), response.getNumeroLicenca(), String.valueOf(response.getTipoLicenca()));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/busca/paginada")

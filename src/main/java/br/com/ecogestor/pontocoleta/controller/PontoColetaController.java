@@ -4,6 +4,7 @@ import br.com.ecogestor.pontocoleta.dto.request.PontoColetaRequest;
 import br.com.ecogestor.pontocoleta.dto.response.PontoColetaResponse;
 import br.com.ecogestor.pontocoleta.service.PontoColetaService;
 import br.com.ecogestor.shared.enums.EnumTipoResiduo;
+import br.com.ecogestor.atividade.service.AtividadeRecenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,11 +22,16 @@ public class PontoColetaController {
     @Autowired
     PontoColetaService pontoColetaService;
 
+    @Autowired
+    AtividadeRecenteService atividadeRecenteService;
+
     @PostMapping(path = "/criar")
     public ResponseEntity<PontoColetaResponse> criar(
             @RequestBody PontoColetaRequest pontoColetaRequest) {
         log.info("Criando ponto de coleta ->");
-        return ResponseEntity.ok(pontoColetaService.criar(pontoColetaRequest));
+        PontoColetaResponse response = pontoColetaService.criar(pontoColetaRequest);
+        atividadeRecenteService.registrarCriacaoPonto(response.getId(), response.getNomePonto());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/busca/paginada")

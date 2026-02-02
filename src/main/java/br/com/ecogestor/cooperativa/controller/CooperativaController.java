@@ -3,6 +3,7 @@ package br.com.ecogestor.cooperativa.controller;
 import br.com.ecogestor.cooperativa.dto.request.CooperativaRequest;
 import br.com.ecogestor.cooperativa.dto.response.CooperativaResponse;
 import br.com.ecogestor.cooperativa.service.CooperativaService;
+import br.com.ecogestor.atividade.service.AtividadeRecenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,15 @@ public class CooperativaController {
     @Autowired
     CooperativaService cooperativaService;
 
+    @Autowired
+    AtividadeRecenteService atividadeRecenteService;
+
     @PostMapping(path = "/criar")
     public ResponseEntity<CooperativaResponse> criar(@RequestBody CooperativaRequest cooperativaRequest) {
         log.info("Cadastrando cooperativa ->");
-        return ResponseEntity.ok(cooperativaService.criar(cooperativaRequest));
+        CooperativaResponse response = cooperativaService.criar(cooperativaRequest);
+        atividadeRecenteService.registrarCriacaoCooperativa(response.getId(), response.getNome());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/listar-todas")
